@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     synthetic_badge: str = "Synthetic demo data"
     demo_mode: bool = True
     demo_password: str = "demo1234"
+    # Seed the DB with demo users/cases on startup if it's empty (for hosts with ephemeral disks).
+    auto_seed: bool = False
     jwt_secret: str = "zeromalaria-demo-secret-change-in-production"
     jwt_expire_hours: int = 8
     # prompt = dismissible modal (default); enforce = cannot dismiss until password changed

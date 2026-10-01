@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: zeromalaria-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r apps/api/requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --app-dir apps/api
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: ZM_DEMO_MODE
+        value: "true"
+      - key: ZM_DEMO_PASSWORD
+        value: demo1234
+      - key: ZM_AUTO_SEED
+        value: "true"
+      - key: ZM_PASSWORD_CHANGE_POLICY
+        value: prompt
+      - key: ZM_JWT_SECRET
+        generateValue: true

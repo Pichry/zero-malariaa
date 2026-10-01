@@ -140,6 +140,16 @@ def on_startup() -> None:
                 "Refusing to start: ZM_DEMO_MODE=false but ZM_DEMO_PASSWORD is still a demo default."
             )
     init_db()
+    if settings.auto_seed:
+        db = SessionLocal()
+        try:
+            if db.query(User).count() == 0:
+                from app.seed import run_seed
+
+                run_seed(db, "full")
+                db.commit()
+        finally:
+            db.close()
 
 
 def _case_dict(body: TriageRequest) -> dict[str, Any]:
